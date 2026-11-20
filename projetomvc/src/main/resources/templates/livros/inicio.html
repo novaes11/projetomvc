@@ -3,31 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início - Livros</title>
+    <title>Catálogo de Livros</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <a th:href="@{/}" class="brand-title">Biblioteca MVC</a>
-            <nav>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a th:href="@{/}" class="site-logo">
+                Acervo Bibliográfico
+                <span>Sistema de Biblioteca</span>
+            </a>
+            <nav class="nav-links">
                 <a th:href="@{/}">Início</a>
-                <a th:href="@{/livros}">Livros</a>
+                <a th:href="@{/livros}" class="active">Livros</a>
                 <a th:href="@{/autores}">Autores</a>
                 <a th:href="@{/categorias}">Categorias</a>
-                <a th:href="@{/usuarios}">Usuários</a>
+                <a th:href="@{/usuarios}">Leitores</a>
                 <a th:href="@{/emprestimos}">Empréstimos</a>
             </nav>
         </div>
     </header>
 
-    <main class="main-content">
-        <div class="card">
-            <h1 class="page-title">Módulo de Livros</h1>
-            <p style="color: #475569; margin-bottom: 20px;">
-                Bem-vindo ao módulo de livros. Aqui você pode navegar diretamente para a listagem ou cadastrar novos livros no acervo.
+    <main class="container">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Catálogo Geral de Livros</h2>
+            </div>
+            <p style="color: #64748b; margin-bottom: 20px; font-size: 14px;">
+                Consulta e registro de obras literárias, didáticas e científicas catalogadas no acervo.
             </p>
-            <a th:href="@{/livros}" class="btn btn-primary">Ir para Lista de Livros</a>
+            <a th:href="@{/livros}" class="btn btn-primary">Acessar Catálogo de Livros</a>
         </div>
     </main>
 </body>
