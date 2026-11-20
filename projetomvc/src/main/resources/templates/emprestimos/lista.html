@@ -3,85 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empréstimos - Biblioteca MVC</title>
+    <title>Circulação e Empréstimos</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <a th:href="@{/}" class="brand-title">Biblioteca MVC</a>
-            <nav>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a th:href="@{/}" class="site-logo">
+                Acervo Bibliográfico
+                <span>Sistema de Biblioteca</span>
+            </a>
+            <nav class="nav-links">
                 <a th:href="@{/}">Início</a>
                 <a th:href="@{/livros}">Livros</a>
                 <a th:href="@{/autores}">Autores</a>
                 <a th:href="@{/categorias}">Categorias</a>
-                <a th:href="@{/usuarios}">Usuários</a>
-                <a th:href="@{/emprestimos}">Empréstimos</a>
+                <a th:href="@{/usuarios}">Leitores</a>
+                <a th:href="@{/emprestimos}" class="active">Empréstimos</a>
             </nav>
         </div>
     </header>
 
-    <main class="main-content">
-        <h1 class="page-title">Gestão de Empréstimos</h1>
+    <main class="container">
+        <div class="page-header">
+            <h1>Circulação e Empréstimos</h1>
+            <p>Controle de retiradas, prazos de devolução e disponibilidade de títulos.</p>
+        </div>
 
-        <div class="card">
-            <h2 class="card-title">Novo Empréstimo</h2>
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Registrar Saída de Exemplar</h2>
+            </div>
             <form th:action="@{/emprestimos}" method="post">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="tituloLivro">Título do Livro</label>
-                        <input type="text" id="tituloLivro" name="tituloLivro" class="form-control" placeholder="Ex: Dom Casmurro" required>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="tituloLivro">Título da Obra</label>
+                        <input type="text" id="tituloLivro" name="tituloLivro" placeholder="Título do exemplar" required>
                     </div>
-                    <div class="form-group">
-                        <label for="nomeUsuario">Nome do Usuário</label>
-                        <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control" placeholder="Ex: Maria Silva" required>
+                    <div class="field">
+                        <label for="nomeUsuario">Nome do Leitor</label>
+                        <input type="text" id="nomeUsuario" name="nomeUsuario" placeholder="Identificação do associado" required>
                     </div>
-                    <div class="form-group">
-                        <label for="dataDevolucaoPrevista">Data Prevista de Devolução</label>
-                        <input type="date" id="dataDevolucaoPrevista" name="dataDevolucaoPrevista" class="form-control">
+                    <div class="field">
+                        <label for="dataDevolucaoPrevista">Prazo Previsto de Devolução</label>
+                        <input type="date" id="dataDevolucaoPrevista" name="dataDevolucaoPrevista">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Registrar Empréstimo</button>
+                <button type="submit" class="btn btn-primary">Confirmar Empréstimo</button>
             </form>
         </div>
 
-        <div class="card">
-            <h2 class="card-title">Histórico de Empréstimos</h2>
-            <div class="table-responsive">
-                <table>
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Registros de Circulação</h2>
+            </div>
+            <div class="table-wrapper">
+                <table class="catalog-table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Livro</th>
-                            <th>Usuário</th>
+                            <th>Obra</th>
+                            <th>Leitor</th>
                             <th>Retirada</th>
                             <th>Devolução Prevista</th>
                             <th>Devolução Efetiva</th>
-                            <th>Status</th>
+                            <th>Situação</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="emprestimo, stat : ${emprestimos}">
                             <td th:text="${stat.count}">1</td>
-                            <td th:text="${emprestimo.livro != null ? emprestimo.livro.titulo : '-'}">Livro</td>
-                            <td th:text="${emprestimo.usuario != null ? emprestimo.usuario.nome : '-'}">Usuário</td>
+                            <td th:text="${emprestimo.livro != null ? emprestimo.livro.titulo : '-'}">Obra</td>
+                            <td th:text="${emprestimo.usuario != null ? emprestimo.usuario.nome : '-'}">Leitor</td>
                             <td th:text="${emprestimo.dataRetirada}">01/01/2026</td>
                             <td th:text="${emprestimo.dataDevolucaoPrevista}">08/01/2026</td>
                             <td th:text="${emprestimo.dataDevolucaoEfetiva != null ? emprestimo.dataDevolucaoEfetiva : '-'}">-</td>
                             <td>
-                                <span th:if="${emprestimo.status == 'ATIVO'}" class="badge badge-warning">Ativo</span>
-                                <span th:if="${emprestimo.status == 'DEVOLVIDO'}" class="badge badge-success">Devolvido</span>
+                                <span th:if="${emprestimo.status == 'ATIVO'}" class="tag tag-borrowed">Ativo</span>
+                                <span th:if="${emprestimo.status == 'DEVOLVIDO'}" class="tag tag-available">Devolvido</span>
                             </td>
                             <td>
                                 <div style="display: flex; gap: 6px;">
-                                    <a th:if="${emprestimo.status == 'ATIVO'}" th:href="@{/emprestimos/devolver/{indice}(indice=${stat.index})}" class="btn btn-success">Devolver</a>
-                                    <a th:href="@{/emprestimos/excluir/{indice}(indice=${stat.index})}" class="btn btn-danger">Excluir</a>
+                                    <a th:if="${emprestimo.status == 'ATIVO'}" th:href="@{/emprestimos/devolver/{indice}(indice=${stat.index})}" class="btn btn-success btn-sm">Devolver</a>
+                                    <a th:href="@{/emprestimos/excluir/{indice}(indice=${stat.index})}" class="btn btn-danger btn-sm">Remover</a>
                                 </div>
                             </td>
                         </tr>
                         <tr th:if="${emprestimos == null || emprestimos.empty}">
-                            <td colspan="8" class="empty-state">Nenhum empréstimo registrado até o momento.</td>
+                            <td colspan="8" class="empty-message">Nenhum registro de circulação no momento.</td>
                         </tr>
                     </tbody>
                 </table>
