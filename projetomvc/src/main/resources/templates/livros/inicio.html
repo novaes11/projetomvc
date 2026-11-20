@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="...">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Biblioteca</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - Livros</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1 th:text="Sistema de Biblioteca"></h1>
-    <nav>
-        <a th:href="@{/livros}">
-            Livro
-        </a>
-    </nav>
+    <header>
+        <div class="header-container">
+            <a th:href="@{/}" class="brand-title">Biblioteca MVC</a>
+            <nav>
+                <a th:href="@{/}">Início</a>
+                <a th:href="@{/livros}">Livros</a>
+                <a th:href="@{/autores}">Autores</a>
+                <a th:href="@{/categorias}">Categorias</a>
+                <a th:href="@{/usuarios}">Usuários</a>
+                <a th:href="@{/emprestimos}">Empréstimos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="card">
+            <h1 class="page-title">Módulo de Livros</h1>
+            <p style="color: #475569; margin-bottom: 20px;">
+                Bem-vindo ao módulo de livros. Aqui você pode navegar diretamente para a listagem ou cadastrar novos livros no acervo.
+            </p>
+            <a th:href="@{/livros}" class="btn btn-primary">Ir para Lista de Livros</a>
+        </div>
+    </main>
 </body>
 </html>
