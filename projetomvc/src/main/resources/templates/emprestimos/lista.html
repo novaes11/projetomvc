@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empréstimos - Biblioteca MVC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a th:href="@{/}" class="brand-title">Biblioteca MVC</a>
+            <nav>
+                <a th:href="@{/}">Início</a>
+                <a th:href="@{/livros}">Livros</a>
+                <a th:href="@{/autores}">Autores</a>
+                <a th:href="@{/categorias}">Categorias</a>
+                <a th:href="@{/usuarios}">Usuários</a>
+                <a th:href="@{/emprestimos}">Empréstimos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="page-title">Gestão de Empréstimos</h1>
+
+        <div class="card">
+            <h2 class="card-title">Novo Empréstimo</h2>
+            <form th:action="@{/emprestimos}" method="post">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tituloLivro">Título do Livro</label>
+                        <input type="text" id="tituloLivro" name="tituloLivro" class="form-control" placeholder="Ex: Dom Casmurro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeUsuario">Nome do Usuário</label>
+                        <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control" placeholder="Ex: Maria Silva" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataDevolucaoPrevista">Data Prevista de Devolução</label>
+                        <input type="date" id="dataDevolucaoPrevista" name="dataDevolucaoPrevista" class="form-control">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Empréstimo</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Histórico de Empréstimos</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Livro</th>
+                            <th>Usuário</th>
+                            <th>Retirada</th>
+                            <th>Devolução Prevista</th>
+                            <th>Devolução Efetiva</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="emprestimo, stat : ${emprestimos}">
+                            <td th:text="${stat.count}">1</td>
+                            <td th:text="${emprestimo.livro != null ? emprestimo.livro.titulo : '-'}">Livro</td>
+                            <td th:text="${emprestimo.usuario != null ? emprestimo.usuario.nome : '-'}">Usuário</td>
+                            <td th:text="${emprestimo.dataRetirada}">01/01/2026</td>
+                            <td th:text="${emprestimo.dataDevolucaoPrevista}">08/01/2026</td>
+                            <td th:text="${emprestimo.dataDevolucaoEfetiva != null ? emprestimo.dataDevolucaoEfetiva : '-'}">-</td>
+                            <td>
+                                <span th:if="${emprestimo.status == 'ATIVO'}" class="badge badge-warning">Ativo</span>
+                                <span th:if="${emprestimo.status == 'DEVOLVIDO'}" class="badge badge-success">Devolvido</span>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 6px;">
+                                    <a th:if="${emprestimo.status == 'ATIVO'}" th:href="@{/emprestimos/devolver/{indice}(indice=${stat.index})}" class="btn btn-success">Devolver</a>
+                                    <a th:href="@{/emprestimos/excluir/{indice}(indice=${stat.index})}" class="btn btn-danger">Excluir</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${emprestimos == null || emprestimos.empty}">
+                            <td colspan="8" class="empty-state">Nenhum empréstimo registrado até o momento.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
