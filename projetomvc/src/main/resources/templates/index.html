@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca - MVC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a th:href="@{/}" class="brand-title">Biblioteca MVC</a>
+            <nav>
+                <a th:href="@{/}">Início</a>
+                <a th:href="@{/livros}">Livros</a>
+                <a th:href="@{/autores}">Autores</a>
+                <a th:href="@{/categorias}">Categorias</a>
+                <a th:href="@{/usuarios}">Usuários</a>
+                <a th:href="@{/emprestimos}">Empréstimos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="page-title">Painel de Gestão da Biblioteca</h1>
+
+        <div class="card">
+            <h2 class="card-title">Como o MVC Funciona Neste Projeto</h2>
+            <p style="color: #475569; margin-bottom: 12px;">
+                <strong>Model:</strong> Representa as entidades do sistema (Livro, Autor, Categoria, Usuario, Emprestimo) e suas regras de negócio.
+            </p>
+            <p style="color: #475569; margin-bottom: 12px;">
+                <strong>Controller:</strong> Recebe as requisições HTTP do navegador, manipula as listas em memória e direciona para as páginas corretas.
+            </p>
+            <p style="color: #475569;">
+                <strong>View:</strong> As telas HTML renderizadas via Thymeleaf que apresentam os formulários e tabelas para o usuário interagir.
+            </p>
+        </div>
+
+        <div class="grid-cards">
+            <div class="feature-card">
+                <div>
+                    <h3>Livros</h3>
+                    <p>Cadastre e liste os livros do acervo com autor, categoria, ISBN e status de disponibilidade.</p>
+                </div>
+                <a th:href="@{/livros}" class="btn btn-primary">Acessar Livros</a>
+            </div>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Autores</h3>
+                    <p>Gerencie os escritores das obras cadastradas com nome e nacionalidade.</p>
+                </div>
+                <a th:href="@{/autores}" class="btn btn-primary">Acessar Autores</a>
+            </div>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Categorias</h3>
+                    <p>Organize o catálogo por temas, áreas de conhecimento e gêneros literários.</p>
+                </div>
+                <a th:href="@{/categorias}" class="btn btn-primary">Acessar Categorias</a>
+            </div>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Usuários</h3>
+                    <p>Controle de leitores e associados com matrícula, e-mail, telefone e tipo de perfil.</p>
+                </div>
+                <a th:href="@{/usuarios}" class="btn btn-primary">Acessar Usuários</a>
+            </div>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Empréstimos</h3>
+                    <p>Registre saídas de livros, acompanhe prazos de devolução e atualize a disponibilidade dos itens.</p>
+                </div>
+                <a th:href="@{/emprestimos}" class="btn btn-primary">Acessar Empréstimos</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
